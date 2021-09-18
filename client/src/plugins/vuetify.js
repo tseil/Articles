@@ -1,8 +1,8 @@
-import Vue from 'vue';
-import Vuetify from 'vuetify/lib/framework';
-import fr from 'vuetify/src/locale/fr';
+import Vue from 'vue'
+import Vuetify from 'vuetify/lib/framework'
+import fr from 'vuetify/lib/locale/fr'
 
-Vue.use(Vuetify);
+Vue.use(Vuetify)
 
 export default new Vuetify({
     lang: {
@@ -17,4 +17,4 @@ export default new Vuetify({
             },
         },
     },
-});
+})
