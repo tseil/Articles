@@ -19,7 +19,7 @@
       formTitle="Modifier un article"
       :editedItem="item"
       type="Edit"
-      @edit-article="editArticle"
+      @edit-article="edit"
       @close-dialog="close"
     />
   </div>
@@ -27,16 +27,37 @@
 
 <script>
 import DialogArticle from "./DialogArticle.vue";
+import { editArticle } from "../../../services/articlesService";
 export default {
   components: { DialogArticle },
-  name: "AddArticle",
+  name: "EditArticle",
   props: { item: Object },
   data: () => ({
     dialog: false,
   }),
   methods: {
-    editArticle(item) {
-      console.log(item);
+    async edit(item) {
+      const result = await editArticle(
+        item.serial_number,
+        item.type,
+        item.name
+      );
+      if (result == "Succés") {
+        this.$swal({
+          icon: "success",
+          title: "Article modifié",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+        this.$emit("get-article");
+      } else {
+        this.$swal({
+          icon: "error",
+          title: "Erreur lors de la modification de l'article",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+      }
       this.dialog = false;
     },
     close() {

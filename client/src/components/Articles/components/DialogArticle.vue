@@ -10,32 +10,25 @@
           <v-row>
             <v-col cols="12" sm="6" md="4">
               <v-text-field
+                required
                 v-model="editedItem.name"
-                label="Dessert name"
+                label="Libellé"
               ></v-text-field>
             </v-col>
             <v-col cols="12" sm="6" md="4">
-              <v-text-field
-                v-model="editedItem.calories"
-                label="Calories"
-              ></v-text-field>
+              <v-select
+                :items="['outillage', 'consommable']"
+                v-model="editedItem.type"
+                required
+                label="Type"
+              ></v-select>
             </v-col>
             <v-col cols="12" sm="6" md="4">
               <v-text-field
-                v-model="editedItem.fat"
-                label="Fat (g)"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" sm="6" md="4">
-              <v-text-field
-                v-model="editedItem.carbs"
-                label="Carbs (g)"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" sm="6" md="4">
-              <v-text-field
-                v-model="editedItem.protein"
-                label="Protein (g)"
+                required
+                v-if="this.type == 'Add'"
+                v-model="editedItem.serial_number"
+                label="Numéro de série"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -44,8 +37,8 @@
 
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="blue darken-1" text @click="close"> Cancel </v-btn>
-        <v-btn color="blue darken-1" text @click="save"> Save </v-btn>
+        <v-btn color="blue darken-1" text @click="close"> Annuler </v-btn>
+        <v-btn color="success" @click="save"> Sauvegarder </v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -68,6 +61,8 @@ export default {
     save() {
       if (this.type == "Add") {
         this.$emit("add-article", this.editedItem);
+      } else if (this.type == "Edit") {
+        this.$emit("edit-article", this.editedItem);
       }
     },
   },

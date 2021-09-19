@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-btn color="primary" @click="dialog = true"> Ajouter article</v-btn>
+    <v-btn color="primary" @click="dialog = true"> Ajouter un article</v-btn>
     <dialog-article
       :dialog="dialog"
       formTitle="Ajouter un article"
@@ -14,6 +14,7 @@
 
 <script>
 import DialogArticle from "./DialogArticle.vue";
+import { addArticle } from "../../../services/articlesService";
 export default {
   components: { DialogArticle },
   name: "AddArticle",
@@ -32,8 +33,24 @@ export default {
     },
   }),
   methods: {
-    addArticle(item) {
-      console.log(item);
+    async addArticle(item) {
+      const result = await addArticle(item.serial_number, item.type, item.name);
+      if (result == "Succés") {
+        this.$swal({
+          icon: "success",
+          title: "Article ajouté",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+        this.$emit("get-article");
+      } else {
+        this.$swal({
+          icon: "error",
+          title: "Erreur lors de l'ajout de l'article",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+      }
       this.dialog = false;
     },
     close() {
