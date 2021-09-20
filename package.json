@@ -1,0 +1,9 @@
+{
+  "name": "articles",
+  "version": "1.0.0",
+  "main": "dist/server.ts",
+  "scripts": {
+    "init": "(cd client && npm i) && (cd .. && cd server && npm i)",
+    "start": " (cd client && npm run build) && (cd .. && cd server && npm run start)"
+  }
+}

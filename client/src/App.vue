@@ -29,9 +29,5 @@ export default {
   components: {
     Articles,
   },
-
-  data: () => ({
-    //
-  }),
 };
 </script>

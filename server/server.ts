@@ -28,12 +28,10 @@ app.use(function (req, res, next) {
 const router = express.Router();
 app.use("/article", router);
 require(__dirname + "/controllers/articlesController")(router)
-app.use(express.static(path.join(__dirname, "../../client", "build")));
+app.use(express.static(path.join(__dirname, "../../client", "dist")));
 app.use(express.static("public"));
 
 
 //Mise en place du port d'écoute
 const port = 8800;
 app.listen(port, () => console.log(`Listening on port ${port}`));
-
-require('./controllers/tunnel/tunnel');

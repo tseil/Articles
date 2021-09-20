@@ -20,7 +20,9 @@ export default {
   name: "AddArticle",
 
   data: () => ({
+    // Etat du dialog de création d'article
     dialog: false,
+    // Création d'un nouvel objet article
     newItem: {
       name: "",
       type: "",
@@ -33,9 +35,15 @@ export default {
     },
   }),
   methods: {
+    /**
+     * Ajout d'un article
+     */
     async addArticle(item) {
       const result = await addArticle(item.serial_number, item.type, item.name);
       if (result == "Succés") {
+         /**
+         * En cas de succés ouverture d'un popup et émission d'un événement pour récupérer la liste à jour
+         */
         this.$swal({
           icon: "success",
           title: "Article ajouté",
@@ -44,6 +52,9 @@ export default {
         });
         this.$emit("get-article");
       } else {
+        /**
+         * Sinon ouverture d'un popup avec un message d'erreur
+         */
         this.$swal({
           icon: "error",
           title: "Erreur lors de l'ajout de l'article",

@@ -48,9 +48,13 @@
 export default {
   name: "DialogArticle",
   props: {
+    // Objet à modifier
     editedItem: Object,
+    // Titre du formulaire
     formTitle: String,
+    // Etat du dialog
     dialog: Boolean,
+    // Type "Add" ou "Edit"
     type: String,
   },
   data: () => ({}),
@@ -58,6 +62,9 @@ export default {
     close() {
       this.$emit("close-dialog");
     },
+    /**
+     * Validation du formulaire
+     */
     save() {
       if (this.type == "Add") {
         this.$emit("add-article", this.editedItem);

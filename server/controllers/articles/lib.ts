@@ -34,7 +34,7 @@ async function getArticle(req: Request, res: Response) {
  * @returns 
  */
 async function addArticle(req: Request, res: Response) {
-    // Récupération des données de la query
+    // Récupération des données du body
     const { name, type, serial_number } = req.body as unknown as Article;
     if (!name || !type || !serial_number) {
         return res.status(400).json({
@@ -81,7 +81,7 @@ async function addArticle(req: Request, res: Response) {
  * @returns 
  */
 async function editArticle(req: Request, res: Response) {
-    // Récupération des données de la query
+    // Récupération des données du body
     const { name, type, serial_number } = req.body as unknown as Article;
     if (!name || !type || !serial_number) {
         return res.status(400).json({
@@ -148,7 +148,7 @@ async function deleteArticle(req: Request, res: Response) {
             driver: sqlite3.Database
         }).then(async (db) => {
             // Execution de la requête delete
-            const result = await db.run('DELETE FROM articles WHERE serial_number = :serial_number', {
+            const result = await db.run('DELETE FROM ArticlesNotDeleted WHERE serial_number = :serial_number', {
                 ':serial_number': article.serial_number
             })
             // Envoi de la réponse avec le status 200
@@ -164,11 +164,11 @@ async function deleteArticle(req: Request, res: Response) {
 }
 
 /**
- * Suppression de l'article en base de données
+ * Archivage de l'article en base de données
  * @returns 
  */
 async function archivedArticle(req: Request, res: Response) {
-    // Récupération des données de la query
+    // Récupération des données du body
     const { serial_number } = req.body as unknown as Article;
     if (!serial_number) {
         return res.status(400).json({
@@ -187,7 +187,7 @@ async function archivedArticle(req: Request, res: Response) {
             filename: 'db/articles.db',
             driver: sqlite3.Database
         }).then(async (db) => {
-            // Execution de la requête delete
+            // Execution de la requête update
             const result = await db.run('UPDATE articles SET isArchived = true WHERE serial_number = :serial_number', {
                 ':serial_number': article.serial_number
             })
@@ -204,11 +204,11 @@ async function archivedArticle(req: Request, res: Response) {
 }
 
 /**
- * Suppression de l'article en base de données
+ * Modification de l'état de l'article en base de données
  * @returns 
  */
 async function repairArticle(req: Request, res: Response) {
-    // Récupération des données de la query
+    // Récupération des données du body
     const { serial_number, status } = req.body as unknown as Article;
     if (!serial_number || !status) {
         return res.status(400).json({
@@ -228,7 +228,7 @@ async function repairArticle(req: Request, res: Response) {
             filename: 'db/articles.db',
             driver: sqlite3.Database
         }).then(async (db) => {
-            // Execution de la requête delete
+            // Execution de la requête update
             const result = await db.run('UPDATE articles SET status = :status WHERE serial_number = :serial_number', {
                 ':serial_number': article.serial_number,
                 ':status': article.status

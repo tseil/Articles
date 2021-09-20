@@ -36,7 +36,13 @@ export default {
     dialog: false,
   }),
   methods: {
+    /**
+     * Edition de l'article
+     */
     async edit(item) {
+      /**
+         * En cas de succés ouverture d'un popup et emission d'un événement pour récupérer la liste à jour
+         */
       const result = await editArticle(
         item.serial_number,
         item.type,
@@ -51,6 +57,9 @@ export default {
         });
         this.$emit("get-article");
       } else {
+        /**
+         * Sinon ouverture d'un popup avec un message d'erreur
+         */
         this.$swal({
           icon: "error",
           title: "Erreur lors de la modification de l'article",
