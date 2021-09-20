@@ -6,8 +6,7 @@
       :items-per-page="5"
       class="elevation-1"
     >
-
-    <!--
+      <!--
       Filtre sur le nom
      -->
       <template v-slot:header.name="{ header }">
@@ -37,7 +36,7 @@
         </v-menu>
       </template>
 
-  <!--
+      <!--
       Filtre sur le type
      -->
 
@@ -150,7 +149,7 @@
         </v-menu>
       </template>
 
-<!--
+      <!--
       Filtre sur l'état
      -->
 
@@ -224,7 +223,7 @@
         </v-menu>
       </template>
 
-    <!--
+      <!--
       Bandeau haut du tableau contenant le bouton ajouter un article
      -->
 
@@ -240,13 +239,13 @@
       <template v-slot:item.status="{ item }">
         <v-chip :color="getStatusColor(item.status)" dark>
           {{ item.status }}
-        </v-chip> </template
-      >
-      
+        </v-chip>
+      </template>
+
       <!-- 
         Actions possible sur chaque ligne
       -->
-      
+
       <template v-slot:item.actions="{ item }">
         <!--
           Modification de l'article
@@ -425,9 +424,9 @@ export default {
     filteredArticles() {
       var conditions = [];
 
-/**
- * On ajoute les filtres selon la valeur de l'élément filtré
- */
+      /**
+       * On ajoute les filtres selon la valeur de l'élément filtré
+       */
       if (this.name) {
         conditions.push(this.filterName);
       }
@@ -455,9 +454,9 @@ export default {
       conditions.push(this.filterIsArchived);
       conditions.push(this.filterIsDeleted);
 
-/**
- * Applique tous les filtres à la liste des articles
- */
+      /**
+       * Applique tous les filtres à la liste des articles
+       */
       if (conditions.length > 0) {
         return this.articles.filter((article) => {
           return conditions.every((condition) => {
@@ -466,31 +465,31 @@ export default {
         });
       }
 
-/**
- * Retourne la liste filtrée
- */
+      /**
+       * Retourne la liste filtrée
+       */
       return this.articles;
     },
   },
 
   methods: {
     /**
- * Fonction de filtre sur le nom
- */
+     * Fonction de filtre sur le nom
+     */
     filterName(item) {
       return item.name.toLowerCase().includes(this.name.toLowerCase());
     },
 
-/**
- * Fonction de filtre sur le type
- */
+    /**
+     * Fonction de filtre sur le type
+     */
     filterType(item) {
       return item.type.toLowerCase().includes(this.type.toLowerCase());
     },
 
-/**
- * Fonction de filtre sur l'archivage de l'article
- */
+    /**
+     * Fonction de filtre sur l'archivage de l'article
+     */
     filterIsArchived(item) {
       if (this.isArchived && this.isNotArchived) {
         return item;
@@ -501,9 +500,9 @@ export default {
       }
     },
 
-/**
- * Fonction de filtre sur la suppression de l'article
- */
+    /**
+     * Fonction de filtre sur la suppression de l'article
+     */
     filterIsDeleted(item) {
       if (this.isDeleted && this.isNotDeleted) {
         return item;
@@ -514,16 +513,16 @@ export default {
       }
     },
 
-/**
- * Fonction de filtre sur l'état
- */
+    /**
+     * Fonction de filtre sur l'état
+     */
     filterStatus(item) {
       return item.status.toLowerCase().includes(this.status.toLowerCase());
     },
 
-/**
- * Fonction de filtre sur le numéro de série
- */
+    /**
+     * Fonction de filtre sur le numéro de série
+     */
     filterSerialNumber(item) {
       return item.serial_number
         .toString()
@@ -531,9 +530,9 @@ export default {
         .includes(this.serialNumber.toLowerCase());
     },
 
-/**
- * Fonction de filtre de la date de création
- */
+    /**
+     * Fonction de filtre de la date de création
+     */
     filterCreationDate(item) {
       return (
         item.creation_date > this.creationDate[0] &&
@@ -541,9 +540,9 @@ export default {
       );
     },
 
-/**
- * Fonction de filtre de la date de modification
- */
+    /**
+     * Fonction de filtre de la date de modification
+     */
     filterModificationDate(item) {
       return (
         item.modification_date > this.modificationDate[0] &&
@@ -551,16 +550,16 @@ export default {
       );
     },
 
-/**
- * Récupére la liste des articles
- */
+    /**
+     * Récupére la liste des articles
+     */
     async get() {
       this.articles = await getArticles();
     },
 
-/**
- * Ouverture du dialog de confirmation pour la demande de réparation / finalisation de la réparation
- */
+    /**
+     * Ouverture du dialog de confirmation pour la demande de réparation / finalisation de la réparation
+     */
     openRepairDialog(serial_number, status, name) {
       var title = "";
       /**
@@ -571,9 +570,9 @@ export default {
       if (status == "A réparer")
         title = "Souhaitez-vous finir la réparation de : " + name + " ?";
 
-        /**
-         * Déclenche le dialog de validation
-         */
+      /**
+       * Déclenche le dialog de validation
+       */
       this.$swal({
         title: title,
         showCancelButton: true,
@@ -589,9 +588,9 @@ export default {
       });
     },
 
-/**
- * Appelle la fonction pour modifier l'état d'un article
- */
+    /**
+     * Appelle la fonction pour modifier l'état d'un article
+     */
     async repair(serial_number, status) {
       const result = await repairedArticle(serial_number, status);
       if (result == "Succés") {
@@ -618,13 +617,13 @@ export default {
       }
     },
 
-/**
- * Ouverture du dialog de confirmation pour la demande d'archivage d'un article
- */
+    /**
+     * Ouverture du dialog de confirmation pour la demande d'archivage d'un article
+     */
     openArchiveDialog(item) {
-       /**
-         * Déclenche le dialog de validation
-         */
+      /**
+       * Déclenche le dialog de validation
+       */
       this.$swal({
         title: "Souhaitez-vous archiver : " + item.name + " ?",
         showCancelButton: true,
@@ -640,9 +639,9 @@ export default {
       });
     },
 
-/**
- * Appelle la fonction pour archiver un article
- */
+    /**
+     * Appelle la fonction pour archiver un article
+     */
     async archive(item) {
       const result = await archivedArticle(item.serial_number);
       if (result == "Succés") {
@@ -669,13 +668,13 @@ export default {
       }
     },
 
-/**
- * Ouverture du dialog de confirmation pour la demande de suppression d'un article
- */
+    /**
+     * Ouverture du dialog de confirmation pour la demande de suppression d'un article
+     */
     openDeleteDialog(item) {
-       /**
-         * Déclenche le dialog de validation
-         */
+      /**
+       * Déclenche le dialog de validation
+       */
       this.$swal({
         title: "Souhaitez-vous supprimer : " + item.name + " ?",
         showCancelButton: true,
@@ -691,9 +690,9 @@ export default {
       });
     },
 
-/**
- * Appelle la fonction pour supprimer un article
- */
+    /**
+     * Appelle la fonction pour supprimer un article
+     */
     async delete(serial_number) {
       const result = await deleteArticle(serial_number);
       if (result == "Succés") {

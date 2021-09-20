@@ -41,7 +41,7 @@ export default {
     async addArticle(item) {
       const result = await addArticle(item.serial_number, item.type, item.name);
       if (result == "Succés") {
-         /**
+        /**
          * En cas de succés ouverture d'un popup et émission d'un événement pour récupérer la liste à jour
          */
         this.$swal({

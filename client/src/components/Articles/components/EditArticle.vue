@@ -41,8 +41,8 @@ export default {
      */
     async edit(item) {
       /**
-         * En cas de succés ouverture d'un popup et emission d'un événement pour récupérer la liste à jour
-         */
+       * En cas de succés ouverture d'un popup et emission d'un événement pour récupérer la liste à jour
+       */
       const result = await editArticle(
         item.serial_number,
         item.type,
